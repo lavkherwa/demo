@@ -1,23 +1,44 @@
-# Compiled class file
-*.class
+**/gen/
+**/edmx/
+*.db
+schema.sql
+default-env.json
 
-# Log file
-*.log
+**/bin/
+**/target/
+.flattened-pom.xml
+.classpath
+.project
+.settings
+**.factorypath
 
-# BlueJ files
-*.ctxt
+**/node/
+**/node_modules/
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+**/.mta/
+*.mtar
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
+*.log*
+gc_history*
+hs_err*
+*.tgz
+*.iml
+
+.vscode
+.idea
+
+.DS_Store
+Makefile_*
+
 *.zip
-*.tar.gz
-*.rar
+.factorypath
+*.imlgen/
+gen/
+.history/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+*.mtapackage-lock.json
+*.ipr
+*.iws
+
+mta_archives
+/srv/.openapi-generator/
