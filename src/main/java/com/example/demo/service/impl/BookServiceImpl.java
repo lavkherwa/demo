@@ -2,7 +2,6 @@ package com.example.demo.service.impl;
 
 import com.example.demo.client.BookDetailServiceClient;
 import com.example.demo.data.Book;
-import com.example.demo.data.Student;
 import com.example.demo.data.enriched.BookDetail;
 import com.example.demo.data.enriched.EnrichedBook;
 import com.example.demo.exception.DataNotFoundException;
@@ -45,14 +44,15 @@ public class BookServiceImpl implements BookService {
     public Book AddAuthorToBook(int bookId, int authorId) {
 
         // Read book
-        var book = bookRepo.findById(bookId).get();
-        if (book == null)
+        if (bookRepo.findById(bookId).isEmpty())
             throw new DataNotFoundException(String.format("Book not found with ID: %d", bookId));
+        var book = bookRepo.findById(bookId).get();
 
         // Read Author
-        var author = authorRepo.findById(authorId).get();
-        if (author == null)
+
+        if (authorRepo.findById(authorId).isEmpty())
             throw new DataNotFoundException(String.format("Author not found with ID: %d", authorId));
+        var author = authorRepo.findById(authorId).get();
 
         book.getAuthors().add(author);
 
@@ -62,14 +62,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book AddStudentToBook(int bookId, int studentId) {
         // Read book
-        Book book = bookRepo.findById(bookId).get();
-        if (book == null)
+        if (bookRepo.findById(bookId).isEmpty())
             throw new DataNotFoundException(String.format("Book not found with ID: %d", bookId));
+        var book = bookRepo.findById(bookId).get();
 
         // Read student
-        Student student = studentRepo.findById(studentId).get();
-        if (student == null)
+        if (studentRepo.findById(studentId).isEmpty())
             throw new DataNotFoundException(String.format("Student not found with ID: %d", studentId));
+        var student = studentRepo.findById(studentId).get();
 
         book.setStudent(student);
 
@@ -81,8 +81,14 @@ public class BookServiceImpl implements BookService {
 
         EnrichedBook eBook = new EnrichedBook();
 
-        Book book = bookRepo.findById(id).get();
-        BookDetail bookDetail = bookDetailServiceAdapter.getBookDetail(id).get();
+        Book book = null;
+        if (bookRepo.findById(id).isPresent())
+            book = bookRepo.findById(id).get();
+
+        BookDetail bookDetail = null;
+        if (bookDetailServiceAdapter.getBookDetail(id).isPresent())
+            bookDetail = bookDetailServiceAdapter.getBookDetail(id).get();
+
 
         if (book != null) {
             eBook.setId(book.getID());

@@ -27,7 +27,7 @@ public class BookServiceHandler {
 
     @GetMapping("/api/availability")
     public ResponseEntity<String> checkService() {
-        return new ResponseEntity<String>("Service is up and running..", HttpStatus.OK);
+        return new ResponseEntity<>("Service is up and running..", HttpStatus.OK);
     }
 
     @GetMapping("/BookService/Books")
@@ -37,7 +37,7 @@ public class BookServiceHandler {
 
     @GetMapping("/BookService/Books/{id}")
     public ResponseEntity<Book> getBook(@PathVariable String id) {
-        return new ResponseEntity<>(bookService.getBook(Integer.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.getBook(Integer.parseInt(id)), HttpStatus.OK);
     }
 
     @GetMapping("/BookService/Authors")
@@ -47,7 +47,7 @@ public class BookServiceHandler {
 
     @GetMapping("/BookService/Authors/{id}")
     public ResponseEntity<Author> getAuthor(@PathVariable String id) {
-        return new ResponseEntity<>(authorService.getAuthor(Integer.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(authorService.getAuthor(Integer.parseInt(id)), HttpStatus.OK);
     }
 
     @GetMapping("/BookService/Students")
@@ -57,21 +57,21 @@ public class BookServiceHandler {
 
     @GetMapping("/BookService/Students/{id}")
     public ResponseEntity<Student> getStudents(@PathVariable String id) {
-        return new ResponseEntity<>(studentService.getStudent(Integer.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudent(Integer.parseInt(id)), HttpStatus.OK);
     }
 
     @PutMapping("/BookService/Books/{bookId}/Authors/{authorId}")
     public ResponseEntity<Book> AssignBookToAuthor(@PathVariable String bookId, @PathVariable String authorId) {
-        return new ResponseEntity<>(bookService.AddAuthorToBook(Integer.valueOf(bookId), Integer.valueOf(authorId)), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.AddAuthorToBook(Integer.parseInt(bookId), Integer.parseInt(authorId)), HttpStatus.OK);
     }
 
     @PutMapping("/BookService/Books/{bookId}/Students/{studentId}")
     public ResponseEntity<Book> AssignBookToStudent(@PathVariable String bookId, @PathVariable String studentId) {
-        return new ResponseEntity<>(bookService.AddStudentToBook(Integer.valueOf(bookId), Integer.valueOf(studentId)), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.AddStudentToBook(Integer.parseInt(bookId), Integer.parseInt(studentId)), HttpStatus.OK);
     }
 
     @GetMapping("/BookService/EnrichedBook/{id}")
     public ResponseEntity<EnrichedBook> getEnrichedBook(@PathVariable String id){
-        return new ResponseEntity<>(bookService.getEnrichedBook(Integer.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.getEnrichedBook(Integer.parseInt(id)), HttpStatus.OK);
     }
 }
