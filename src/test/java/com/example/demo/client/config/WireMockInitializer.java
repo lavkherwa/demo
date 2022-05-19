@@ -14,27 +14,32 @@ public class WireMockInitializer implements ApplicationContextInitializer<Config
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
 
-        WireMockServer wireMockServer = new WireMockServer(new WireMockConfiguration().dynamicPort());
+        WireMockServer mockBookService = getWireMockServer();
 
         // Start the server
-        wireMockServer.start();
+        mockBookService.start();
 
         // Stop the server when application context is closed
         applicationContext.addApplicationListener(applicationEvent -> {
             if (applicationEvent instanceof ContextClosedEvent) {
-                wireMockServer.stop();
+                mockBookService.stop();
             }
         });
 
         // Register our mockserver to the bean factory so that it can be autowired to our tests
         applicationContext
                 .getBeanFactory()
-                .registerSingleton("wireMockServer", wireMockServer);
+                .registerSingleton("mockBookService", mockBookService);
 
         // Overwrite the base url for the external service in accordance with mock server
         TestPropertyValues
-                .of(Map.of("bookdetails_service_url", wireMockServer.baseUrl()))
+                .of(Map.of("bookdetails_service_url", mockBookService.baseUrl()))
                 .applyTo(applicationContext);
-
     }
+
+    private WireMockServer getWireMockServer() {
+        return new WireMockServer(new WireMockConfiguration().dynamicPort());
+    }
+
+
 }
